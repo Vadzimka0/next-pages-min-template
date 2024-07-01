@@ -1,16 +1,34 @@
+import { InferGetServerSidePropsType } from "next";
+import Link from "next/link";
 import { Button, Group } from "@mantine/core";
-import { useEffect } from "react";
+import { getFixtures } from "@/features/fixtures";
 
-const IndexPage = () => {
-  useEffect(() => {
-    throw new Error("asd");
-  }, []);
+type PublicFixturesPageProps = InferGetServerSidePropsType<
+  typeof getServerSideProps
+>;
+
+const IndexPage = ({ fixtures }: PublicFixturesPageProps) => {
+  // const fixtures = useFixtures();
+
+  console.log(fixtures);
 
   return (
     <Group mt={50} justify="center">
-      <Button size="xl">Welcome to Mantine!</Button>
+      <Button component={Link} href="/" size="compact-xs">
+        xg
+      </Button>
     </Group>
   );
 };
 
 export default IndexPage;
+
+export const getServerSideProps = async () => {
+  const fixtures = await getFixtures().catch(() => null);
+
+  return {
+    props: {
+      fixtures,
+    },
+  };
+};

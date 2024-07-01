@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import "@mantine/charts/styles.css";
 import Head from "next/head";
 
 import { AppProvider } from "@/providers/appProvider";
