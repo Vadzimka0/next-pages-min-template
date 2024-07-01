@@ -1,11 +1,11 @@
 import "@mantine/core/styles.css";
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
-import { theme } from "../theme";
 
-export default function App({ Component, pageProps }: any) {
+import { AppProvider } from "@/providers/appProvider";
+
+const App = ({ Component, pageProps }: any) => {
   return (
-    <MantineProvider theme={theme}>
+    <AppProvider>
       <Head>
         <title>Mantine Template</title>
         <meta
@@ -15,6 +15,8 @@ export default function App({ Component, pageProps }: any) {
         <link rel="shortcut icon" href="/favicon.svg" />
       </Head>
       <Component {...pageProps} />
-    </MantineProvider>
+    </AppProvider>
   );
-}
+};
+
+export default App;
