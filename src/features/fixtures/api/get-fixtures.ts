@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { apiClient } from "@/lib/api-client";
 
-export const getFixtures = (): Promise<any[]> => {
+export const getFixtures = (): Promise<any> => {
   return apiClient.get(`/`);
 };
 
