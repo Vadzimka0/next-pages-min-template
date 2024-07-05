@@ -13,7 +13,7 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider>
       {/* <Notifications /> */}
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />

@@ -1,6 +1,12 @@
 import { InferGetServerSidePropsType } from "next";
 import Link from "next/link";
-import { Button, Group } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Switch,
+  useComputedColorScheme,
+  useMantineColorScheme,
+} from "@mantine/core";
 
 import { getFixtures } from "@/features/fixtures";
 
@@ -10,13 +16,34 @@ type PublicFixturesPageProps = InferGetServerSidePropsType<
 
 const IndexPage = ({ fixtures }: PublicFixturesPageProps) => {
   const duels = fixtures.data;
-  console.log(duels);
+  // console.log(duels);
+
+  const { colorScheme, setColorScheme } = useMantineColorScheme({
+    keepTransitions: true,
+  });
+  const computedColorScheme = useComputedColorScheme("light");
+
+  const toggleColorScheme = () => {
+    setColorScheme(computedColorScheme === "dark" ? "light" : "dark");
+  };
 
   return (
     <>
       {/* <Group mt={50} justify="center"> */}
+      <div>
+        <Button onClick={toggleColorScheme}>
+          switch to {computedColorScheme === "light" ? "dark" : "light"}
+        </Button>
+        {/* <Switch onChange={toggleColorScheme} /> */}
+      </div>
       {duels?.map((duel: { ts: number; id: string }) => (
-        <Button key={duel.id} component={Link} href="/" size="compact-xs">
+        <Button
+          key={duel.id}
+          component={Link}
+          href="/"
+          size="compact-xs"
+          // style={{ backgroundColor: "var(--mantine-color-red-8)" }}
+        >
           {duel.id}
         </Button>
       ))}
