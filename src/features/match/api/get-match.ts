@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { apiClient } from "@/lib/api-client";
+import { MatchType } from "@/types";
 
-export const getMatch = ({ matchId }: any): Promise<any> => {
+type GetMatchOptions = {
+  matchId: string;
+};
+
+export const getMatch = ({ matchId }: GetMatchOptions): Promise<MatchType> => {
   return apiClient.get(`/match/${matchId}`);
 };
 
-export const useMatch = ({ matchId }: any) => {
+export const useMatch = ({ matchId }: GetMatchOptions) => {
   const { data, isLoading } = useQuery({
     queryKey: ["match", matchId],
     queryFn: () => getMatch({ matchId }),

@@ -1,26 +1,26 @@
-// import { Stack, Button } from "@chakra-ui/react";
-import { getMatch } from "@/features/match/api/get-match";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { ReactElement } from "react";
+import { Container } from "@mantine/core";
 
+import { getMatch } from "@/features/match";
+import { MatchInfo } from "@/components/match-info";
 // import { NotFound } from "@/components/not-found";
 // import { Seo } from "@/components/seo";
-// import { PublicLayout } from "@/layouts/public-layout";
-// import { getJob, PublicJobInfo } from "@/features/jobs";
-// import { getOrganization } from "@/features/organizations";
 
 type MatchPageProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export const MatchPage = ({ match }: MatchPageProps) => {
-  console.log(match);
-  // const isInvalid =
-  // !job || !organization || organization.id !== job.organizationId;
+  if (!match) {
+    return <>404</>;
+  }
+  const { matchInfo, home: homeHistory, away: awayHistory } = match;
 
-  // if (isInvalid) {
-  //   return <NotFound />;
-  // }
-
-  return <>123</>;
+  return (
+    <>
+      <Container size="xl">
+        <MatchInfo info={matchInfo} />
+      </Container>
+    </>
+  );
 };
 
 // PublicJobPage.getLayout = function getLayout(page: ReactElement) {
