@@ -20,8 +20,8 @@ type MatchHistoryType = MatchInfoType & {
 };
 
 export type MatchType = {
-  home: MatchHistoryType;
-  away: MatchHistoryType;
+  home: MatchHistoryType[];
+  away: MatchHistoryType[];
   matchInfo: MatchInfoType;
 };
 
