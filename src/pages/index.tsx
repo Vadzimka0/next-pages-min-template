@@ -6,7 +6,7 @@ import { Table, Center, Box, Group, Button } from "@mantine/core";
 
 import { getFixtures } from "@/features/fixtures";
 // import { DATES } from "@/config/constants";
-import useLocalStorage from "@/hooks/useLS";
+// import useLocalStorage from "@/hooks/useLS";
 // import classes from "./../styles/index.module.css";
 
 type PublicFixturesPageProps = InferGetServerSidePropsType<

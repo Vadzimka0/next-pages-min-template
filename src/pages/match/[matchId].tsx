@@ -12,12 +12,19 @@ export const MatchPage = ({ match }: MatchPageProps) => {
   if (!match) {
     return <>404</>;
   }
-  const { matchInfo, home: homeHistory, away: awayHistory } = match;
+
+  const {
+    matchInfo,
+    home: homeHistoryMatches,
+    away: awayHistoryMatches,
+  } = match;
 
   return (
     <>
       <Container size="xl">
         <MatchInfo info={matchInfo} />
+        {/* //TODO: table */}
+        {/* //TODO: graph */}
       </Container>
     </>
   );

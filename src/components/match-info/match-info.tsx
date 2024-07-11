@@ -19,6 +19,7 @@ export const MatchInfo = ({ info }: { info: MatchInfoType }) => {
           {info.away}
         </Title>
       </Group>
+      {/* //TODO: odds */}
     </>
   );
 };
