@@ -6,6 +6,7 @@ import { MatchInfo } from "@/components/match-info";
 import { API_URL, STATS_TITLES, TABS_VALUES } from "@/config/constants";
 import { MatchHistoryType, MatchInfoType, StatsType } from "@/types";
 import { TableSelection } from "@/components/table";
+import classes from "@/styles/index.module.css";
 
 const MatchPage = () => {
   const router = useRouter();
@@ -71,7 +72,8 @@ const MatchPage = () => {
           value={category}
           onChange={setCategory}
           orientation="vertical"
-          bd="1px solid red"
+          className={classes.tabs}
+          classNames={classes}
         >
           <Tabs.List>
             {TABS_VALUES.map((value: string) => (

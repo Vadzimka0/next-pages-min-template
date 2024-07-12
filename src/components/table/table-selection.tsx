@@ -50,7 +50,7 @@ export const TableSelection = ({
   });
 
   return (
-    <ScrollArea m={"auto"}>
+    <ScrollArea>
       <Table w={650} verticalSpacing="2px" withColumnBorders fz="12px">
         <Table.Thead>
           <Table.Tr>
