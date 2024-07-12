@@ -1,35 +1,20 @@
-import { useRouter } from "next/router";
-import { Container } from "@mantine/core";
-
-import { useMatch } from "@/features/match";
-import { MatchInfo } from "@/components/match-info";
 import { ChangeEvent, useEffect, useState } from "react";
-import { API_URL } from "@/config/constants";
-import { Table } from "@/components/table";
-import { MatchType } from "@/types";
+import { useRouter } from "next/router";
+import { Container, Tabs, Text } from "@mantine/core";
+
+import { MatchInfo } from "@/components/match-info";
+import { API_URL, STATS_TITLES, TABS_VALUES } from "@/config/constants";
+import { MatchHistoryType, MatchInfoType, StatsType } from "@/types";
+import { TableSelection } from "@/components/table";
 
 const MatchPage = () => {
   const router = useRouter();
   const matchId = router.query.matchId as string;
-  // const matchData = useMatch({ matchId });
 
-  // const initHomes = matchData.data?.home.map((match: any) => ({
-  //   ...match,
-  //   ch: true,
-  // }));
-  // const initAways = matchData.data?.home.map((match: any) => ({
-  //   ...match,
-  //   ch: true,
-  // }));
-  // const [homeMatches, setHomeMatches] = useState(initHomes || []);
-  // const [awayMatches, setAwayMatches] = useState(initAways || []);
-
-  // if (matchData.isLoading) <>..loading..</>;
-  // if (!matchData.data) return <>404</>;
-
-  // const matchInfo = matchData.data.matchInfo;
-
-  const [data, setData] = useState<MatchType | null | undefined>(null);
+  const [category, setCategory] = useState<string | null>("xg");
+  const [homeMatches, setHomeMatches] = useState<MatchHistoryType[]>([]);
+  const [awayMatches, setAwayMatches] = useState<MatchHistoryType[]>([]);
+  const [matchInfo, setMatchInfo] = useState<MatchInfoType | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,37 +23,75 @@ const MatchPage = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
-      setData(result);
+      setMatchInfo(result.matchInfo);
+      const homes = result.home.map((match: any) => ({
+        ...match,
+        ch: true,
+      }));
+      // .filter((match: any) => match.home === data.matchInfo.home);
+      const aways = result.away.map((match: any) => ({
+        ...match,
+        ch: true,
+      }));
+      // .filter((match: any) => match.away === data.matchInfo.away);
+      setHomeMatches(homes);
+      setAwayMatches(aways);
     };
 
     fetchData().catch((e) => {
-      // handle the error as needed
       console.error("An error occurred while fetching the data: ", e);
     });
-  }, []);
+  }, [matchId]);
 
-  // const onChangeCheckboxHome = (
-  //   e: ChangeEvent<HTMLInputElement>,
-  //   index: number
-  // ) => {
-  //   homeMatches[index] = { ...homeMatches[index], ch: e.target.checked };
-  //   setHomeMatches([...homeMatches]);
-  // };
+  const onChangeCheckboxHome = (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    homeMatches[index] = { ...homeMatches[index], ch: e.target.checked };
+    setHomeMatches([...homeMatches]);
+  };
 
-  // const onChangeCheckboxAway = (
-  //   e: ChangeEvent<HTMLInputElement>,
-  //   index: number
-  // ) => {
-  //   awayMatches[index] = { ...awayMatches[index], ch: e.target.checked };
-  //   setAwayMatches([...awayMatches]);
-  // };
-  console.log(data);
+  const onChangeCheckboxAway = (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    awayMatches[index] = { ...awayMatches[index], ch: e.target.checked };
+    setAwayMatches([...awayMatches]);
+  };
+
+  //TODO: loading state
+  if (!matchInfo || !homeMatches || !awayMatches) return <>404</>;
+
   return (
     <>
-      <Container size="xl">
-        {data?.matchInfo && <MatchInfo info={data?.matchInfo} />}
+      <Container size="xl" bd="1px dotted grey">
+        <MatchInfo info={matchInfo} />
         {/* //TODO: table */}
-        {/* <Table matches={} onChangeCheckbox={} /> */}
+        <Tabs
+          value={category}
+          onChange={setCategory}
+          orientation="vertical"
+          bd="1px solid red"
+        >
+          <Tabs.List>
+            {TABS_VALUES.map((value: string) => (
+              <Tabs.Tab key={value} value={value} fz={12}>
+                {STATS_TITLES[value]}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+          <TableSelection
+            matches={homeMatches}
+            onChangeCheckbox={onChangeCheckboxHome}
+            category={category}
+          />
+        </Tabs>
+        <hr />
+        {/* <TableSelection
+          matches={awayMatches}
+          onChangeCheckbox={onChangeCheckboxAway}
+          category={category}
+        /> */}
         {/* //TODO: graph */}
       </Container>
     </>

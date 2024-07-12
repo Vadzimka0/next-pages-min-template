@@ -14,9 +14,10 @@ type OddsType = {
   ou25: [number, number];
 };
 
-type MatchHistoryType = MatchInfoType & {
+export type MatchHistoryType = MatchInfoType & {
   score: [number, number];
   stats: StatsType;
+  ch?: boolean;
 };
 
 export type MatchType = {
@@ -25,7 +26,7 @@ export type MatchType = {
   matchInfo: MatchInfoType;
 };
 
-type StatsType = {
+export type StatsType = {
   xg: [number, number] | null;
   ballPoss: [string, string] | null;
   goalAtps: [number, number] | null;

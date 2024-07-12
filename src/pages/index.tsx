@@ -54,15 +54,13 @@ const IndexPage = ({ fixtures }: PublicFixturesPageProps) => {
           )
         )}
         <Table.Tr key={row.id} fz={15}>
-          <Table.Td ta="center" pb={1} pt={1} fz={12}>
+          <Table.Td ta="center" fz={12}>
             {/* {new Date(row.ts).toLocaleDateString()}&nbsp; */}
             {new Date(row.ts).toDateString().slice(4, 10)},&nbsp;
             {new Date(row.ts).toTimeString().slice(0, 5)}
           </Table.Td>
-          <Table.Td ta="right" pb={1} pt={1}>
-            {row.home}
-          </Table.Td>
-          <Table.Td ta="center" pb={1} pt={1}>
+          <Table.Td ta="right">{row.home}</Table.Td>
+          <Table.Td ta="center">
             <Button
               size="compact-xs"
               variant="subtle"
@@ -72,9 +70,7 @@ const IndexPage = ({ fixtures }: PublicFixturesPageProps) => {
               h2h
             </Button>
           </Table.Td>
-          <Table.Td ta="left" pb={1} pt={1}>
-            {row.away}
-          </Table.Td>
+          <Table.Td ta="left">{row.away}</Table.Td>
         </Table.Tr>
       </Fragment>
     );
@@ -110,7 +106,7 @@ const IndexPage = ({ fixtures }: PublicFixturesPageProps) => {
       </Center> */}
       <Center>
         <Table.ScrollContainer minWidth="auto">
-          <Table highlightOnHover>
+          <Table verticalSpacing="2px" highlightOnHover>
             {/* <Table.Thead>
               <Table.Tr>
                 <Table.Th ta="center">Time</Table.Th>

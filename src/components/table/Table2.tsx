@@ -2,7 +2,7 @@ import { Checkbox } from "@mantine/core";
 import TableHeader from "./TableHeader";
 import styles from "./Table.module.css";
 
-export function Table({ matches, onChangeCheckbox }: any) {
+export function Table2({ matches, onChangeCheckbox }: any) {
   const selected = matches && matches.filter((match: any) => match.ch === true);
 
   let sumXgHome = 0;
