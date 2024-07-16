@@ -28,7 +28,7 @@ export type MatchType = {
 
 export type StatsType = {
   xg: [number, number] | null;
-  ballPoss: [string, string] | null;
+  ballPoss: [`${number}%`, `${number}%`] | null;
   goalAtps: [number, number] | null;
   shotsOn: [number, number] | null;
   shotsOff: [number, number] | null;
@@ -38,3 +38,5 @@ export type StatsType = {
   attacks: [number, number] | null;
   dangAtks: [number, number] | null;
 };
+
+export type TeamSelectHost = "home" | "away" | "all";

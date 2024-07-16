@@ -1,10 +1,27 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Container, Tabs, Text } from "@mantine/core";
+import {
+  Center,
+  ComboboxItem,
+  Container,
+  Select,
+  Tabs,
+  Text,
+} from "@mantine/core";
 
 import { MatchInfo } from "@/components/match-info";
-import { API_URL, STATS_TITLES, TABS_VALUES } from "@/config/constants";
-import { MatchHistoryType, MatchInfoType, StatsType } from "@/types";
+import {
+  API_URL,
+  HOST_SELECTS,
+  STATS_TITLES,
+  TABS_VALUES,
+} from "@/config/constants";
+import {
+  MatchHistoryType,
+  MatchInfoType,
+  StatsType,
+  TeamSelectHost,
+} from "@/types";
 import { TableSelection } from "@/components/table";
 import classes from "@/styles/index.module.css";
 
@@ -14,8 +31,17 @@ const MatchPage = () => {
 
   const [category, setCategory] = useState<string | null>("xg");
   const [homeMatches, setHomeMatches] = useState<MatchHistoryType[]>([]);
+  // const [filteredHomeMatches, setFilteredHomeMatches] = useState<
+  //   MatchHistoryType[]
+  // >([]);
   const [awayMatches, setAwayMatches] = useState<MatchHistoryType[]>([]);
   const [matchInfo, setMatchInfo] = useState<MatchInfoType | null>(null);
+
+  // const [firstSelect, setFirstSelect] = useState<ComboboxItem | null>({
+  //   value: "home",
+  //   label: "home",
+  // });
+  // const [secondSelect, setSecondSelect] = useState<TeamSelectHost>("away");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +70,24 @@ const MatchPage = () => {
     });
   }, [matchId]);
 
+  // const onFirstSelectChange = (_value: any, option: any) => {
+  //   setFirstSelect(option);
+  //   setFilteredHomeMatches(
+  //     [...homeMatches].filter((match: MatchHistoryType) => {
+  //       switch (_value) {
+  //         case "home":
+  //           return matchInfo?.home === match.home;
+  //         case "away":
+  //           return matchInfo?.home === match.away;
+  //         case "all":
+  //           return true;
+  //         default:
+  //           return;
+  //       }
+  //     })
+  //   );
+  // };
+
   const onChangeCheckboxHome = (
     e: ChangeEvent<HTMLInputElement>,
     index: number
@@ -64,39 +108,44 @@ const MatchPage = () => {
   if (!matchInfo || !homeMatches || !awayMatches) return <>404</>;
 
   return (
-    <>
-      <Container size="xl" bd="1px dotted grey">
-        <MatchInfo info={matchInfo} />
-        {/* //TODO: table */}
-        <Tabs
-          value={category}
-          onChange={setCategory}
-          orientation="vertical"
-          className={classes.tabs}
-          classNames={classes}
-        >
-          <Tabs.List>
-            {TABS_VALUES.map((value: string) => (
-              <Tabs.Tab key={value} value={value} fz={12}>
-                {STATS_TITLES[value]}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-          <TableSelection
-            matches={homeMatches}
-            onChangeCheckbox={onChangeCheckboxHome}
-            category={category}
-          />
-        </Tabs>
-        <hr />
-        {/* <TableSelection
+    <Container size="xl" bd="1px dotted grey">
+      <MatchInfo info={matchInfo} />
+      <Center fz="15px" mt="md" mb="md">
+        {matchInfo.home}&nbsp;
+        {/* <Select
+          data={HOST_SELECTS}
+          value={firstSelect ? firstSelect.value : null}
+          onChange={onFirstSelectChange}
+        ></Select> */}
+      </Center>
+      <Tabs
+        value={category}
+        onChange={setCategory}
+        orientation="vertical"
+        className={classes.tabs}
+        classNames={classes}
+      >
+        <Tabs.List>
+          {TABS_VALUES.map((value: string) => (
+            <Tabs.Tab key={value} value={value} fz={12}>
+              {STATS_TITLES[value]}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+        <TableSelection
+          matches={homeMatches}
+          onChangeCheckbox={onChangeCheckboxHome}
+          category={category}
+        />
+      </Tabs>
+      <hr />
+      {/* <TableSelection
           matches={awayMatches}
           onChangeCheckbox={onChangeCheckboxAway}
           category={category}
         /> */}
-        {/* //TODO: graph */}
-      </Container>
-    </>
+      {/* //TODO: graph */}
+    </Container>
   );
 };
 

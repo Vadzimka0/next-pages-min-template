@@ -27,3 +27,9 @@ export const STATS_TITLES: any = {
 };
 
 export const TABS_VALUES = Object.keys(STATS_TITLES);
+
+export const HOST_SELECTS = [
+  { value: "home", label: "home" },
+  { value: "away", label: "away" },
+  { value: "all", label: "all" },
+];
