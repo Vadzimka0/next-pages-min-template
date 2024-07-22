@@ -1,5 +1,5 @@
 export type MatchInfoType = {
-  id?: string;
+  id: string;
   ts: number;
   league: string;
   country?: string;

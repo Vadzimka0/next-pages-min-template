@@ -1,38 +1,43 @@
 import { Table, Text, Checkbox, ScrollArea, rem } from "@mantine/core";
 import cx from "clsx";
 
-import classes from "./TableSelection.module.css";
 import { MatchHistoryType, StatsType } from "@/types";
 import { ChangeEvent } from "react";
 import { STATS_TITLES } from "@/config/constants";
 import { calculateMatchesAverages } from "@/utils/calculate-matches-averages";
+import classes from "./TableSelection.module.css";
 
 type TableSelectionProps = {
   matches: MatchHistoryType[];
-  onChangeCheckbox: (e: ChangeEvent<HTMLInputElement>, index: number) => void;
+  onChangeCheckbox: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
   category: string | null;
+  select: string | null;
 };
 
 export const TableSelection = ({
   matches,
   onChangeCheckbox,
   category,
+  select,
 }: TableSelectionProps) => {
   const { firstAvg, secondAvg } = calculateMatchesAverages(matches, category);
 
-  const rows = matches.map((match: MatchHistoryType, index: number) => {
+  const rows = matches.map((match: MatchHistoryType) => {
     let values = category
       ? match.stats[category as keyof typeof match.stats]
       : [];
     return (
       <Table.Tr
-        key={match.id + "_" + index}
-        className={cx({ [classes.rowSelected]: match.ch })}
+        key={match.id}
+        className={cx(
+          { [classes.rowSelected]: match.ch },
+          { [classes.rowNotSelected]: !match.ch }
+        )}
       >
         <Table.Td>
           <Checkbox
             checked={match.ch}
-            onChange={(e) => onChangeCheckbox(e, index)}
+            onChange={(e) => onChangeCheckbox(e, match.id)}
           />
         </Table.Td>
         <Table.Td>{match.home}</Table.Td>
@@ -72,12 +77,21 @@ export const TableSelection = ({
   const fhs = (
     <Table.Tr>
       <Table.Th style={{ width: rem(40) }}></Table.Th>
-      <Table.Th ta="end" fs="italic">
-        Average
-      </Table.Th>
-      <Table.Th ta="center" fs="italic" fz="13px">
-        {firstAvg.toFixed(2)} - {secondAvg.toFixed(2)}
-      </Table.Th>
+      {select === "all" ? (
+        <>
+          <Table.Th></Table.Th>
+          <Table.Th></Table.Th>
+        </>
+      ) : (
+        <>
+          <Table.Th ta="end" fs="italic">
+            Average
+          </Table.Th>
+          <Table.Th ta="center" fs="italic" fz="13px">
+            {firstAvg.toFixed(2)} - {secondAvg.toFixed(2)}
+          </Table.Th>
+        </>
+      )}
       <Table.Th></Table.Th>
       <Table.Th></Table.Th>
       <Table.Th></Table.Th>

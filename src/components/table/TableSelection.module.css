@@ -1,3 +1,8 @@
 .rowSelected {
   background-color: var(--mantine-color-blue-light);
 }
+
+.rowNotSelected {
+  background-color: var(--mantine-color-gray-2);
+  text-decoration: line-through;
+}
