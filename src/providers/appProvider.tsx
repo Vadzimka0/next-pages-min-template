@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { theme } from "../../theme";
+// import { theme } from "../../theme";
 import { queryClient } from "@/lib/react-query";
 
 type AppProviderProps = {

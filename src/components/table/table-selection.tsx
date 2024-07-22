@@ -1,11 +1,26 @@
-import { Table, Text, Checkbox, ScrollArea, rem } from "@mantine/core";
+import { ChangeEvent } from "react";
+import {
+  Table,
+  Text,
+  Checkbox,
+  ScrollArea,
+  rem,
+  Paper,
+  Stack,
+  Group,
+} from "@mantine/core";
+import {
+  AreaChart,
+  ChartTooltipProps,
+  getFilteredChartTooltipPayload,
+} from "@mantine/charts";
 import cx from "clsx";
 
 import { MatchHistoryType, StatsType } from "@/types";
-import { ChangeEvent } from "react";
 import { STATS_TITLES } from "@/config/constants";
 import { calculateMatchesAverages } from "@/utils/calculate-matches-averages";
 import classes from "./TableSelection.module.css";
+import { data } from "./../../pages/match/data";
 
 type TableSelectionProps = {
   matches: MatchHistoryType[];
@@ -13,6 +28,25 @@ type TableSelectionProps = {
   category: string | null;
   select: string | null;
 };
+
+function ChartTooltip({ label, payload }: ChartTooltipProps) {
+  if (!payload) return null;
+
+  return (
+    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
+      <Text fw={500} mb={5}>
+        {label}
+      </Text>
+      {getFilteredChartTooltipPayload(payload).map((item: any) => (
+        <Text key={item.name} c={item.color} fz="sm">
+          {item.name === "opponent" ? item.payload.opponentTeam : item.name}:{" "}
+          {item.value}
+          {item.payload.isHome ? "" : "*"}
+        </Text>
+      ))}
+    </Paper>
+  );
+}
 
 export const TableSelection = ({
   matches,
@@ -102,11 +136,34 @@ export const TableSelection = ({
 
   return (
     <ScrollArea>
-      <Table w={650} verticalSpacing="2px" withTableBorder fz="12px">
-        <Table.Thead>{ths}</Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
-        <Table.Tfoot>{fhs}</Table.Tfoot>
-      </Table>
+      <Stack align="stretch" justify="center" gap="30px">
+        <Table w={650} verticalSpacing="2px" withTableBorder fz="12px">
+          <Table.Thead>{ths}</Table.Thead>
+          <Table.Tbody>{rows}</Table.Tbody>
+          <Table.Tfoot>{fhs}</Table.Tfoot>
+        </Table>
+        <AreaChart
+          bg={"blue.0"}
+          h={200}
+          data={data}
+          dataKey="date"
+          tooltipProps={{
+            content: ({ label, payload }) => (
+              <ChartTooltip label={label} payload={payload} />
+            ),
+          }}
+          series={[
+            { name: "Bayern Munich", color: "indigo.8" },
+            { name: "opponent", color: "orange.4" },
+          ]}
+          curveType="bump"
+          // yAxisProps={{ domain: [0, 120] }}
+          referenceLines={[{ y: 3, label: "Avg 3", color: "indigo.2" }]}
+          xAxisProps={{ angle: -23 }}
+          fillOpacity={0.33}
+          connectNulls
+        />
+      </Stack>
     </ScrollArea>
   );
 };

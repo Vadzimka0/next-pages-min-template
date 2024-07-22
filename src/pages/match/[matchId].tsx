@@ -34,12 +34,14 @@ const MatchPage = () => {
     <Container size="xl" bd="1px dotted grey">
       <MatchInfo info={matchInfo} />
       <Center fz="15px" mt="md" mb="md">
-        {matchInfo.home}&nbsp;
+        {matchInfo.home}:&nbsp; Last&nbsp;
         <Select
+          w="90px"
           data={["home", "away", "all"]}
           value={firstSelect}
           onChange={setFirstSelect}
         />
+        &nbsp;matches:
       </Center>
       <Tabs
         value={category}

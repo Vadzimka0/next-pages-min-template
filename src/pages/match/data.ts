@@ -1,0 +1,51 @@
+export const data = [
+  {
+    date: "Oct 08",
+    "Bayern Munich": 2.5,
+    opponent: 0.08,
+    opponentTeam: "Freiburg",
+    isHome: true,
+  },
+  {
+    date: "Sep 30",
+    "Bayern Munich": 1.85,
+    opponent: 0.94,
+    opponentTeam: "RB Leipzig",
+    isHome: false,
+  },
+  {
+    date: "Sep 23",
+    "Bayern Munich": 5.22,
+    opponent: 0.14,
+    opponentTeam: "Bochum",
+    isHome: true,
+  },
+  {
+    date: "Sep 15",
+    "Bayern Munich": 2.62,
+    opponent: 1.83,
+    opponentTeam: "Bayer Leverkusen",
+    isHome: true,
+  },
+  {
+    date: "Sep 02",
+    "Bayern Munich": 2.21,
+    opponent: 0.45,
+    opponentTeam: "B. Monchengladbach",
+    isHome: false,
+  },
+  {
+    date: "Aug 27",
+    "Bayern Munich": 2.83,
+    opponent: 0.92,
+    opponentTeam: "Augsburg",
+    isHome: true,
+  },
+  {
+    date: "Aug 18",
+    "Bayern Munich": 2.62,
+    opponent: 0.57,
+    opponentTeam: "Werder Bremen",
+    isHome: false,
+  },
+];

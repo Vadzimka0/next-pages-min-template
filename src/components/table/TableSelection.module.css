@@ -5,4 +5,5 @@
 .rowNotSelected {
   background-color: var(--mantine-color-gray-2);
   text-decoration: line-through;
+  opacity: 0.6;
 }
