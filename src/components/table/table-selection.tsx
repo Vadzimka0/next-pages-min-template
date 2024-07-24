@@ -21,7 +21,6 @@ import { MatchHistoryType, StatsType } from "@/types";
 import { STATS_TITLES } from "@/config/constants";
 import { calculateMatchesAverages } from "@/utils/calculate-matches-averages";
 import classes from "./TableSelection.module.css";
-import { data } from "./../../pages/match/data";
 
 type TableSelectionProps = {
   matches: MatchHistoryType[];
@@ -29,25 +28,6 @@ type TableSelectionProps = {
   category: string | null;
   select: string | null;
 };
-
-function ChartTooltip({ label, payload }: ChartTooltipProps) {
-  if (!payload) return null;
-
-  return (
-    <Paper px="md" py="sm" withBorder shadow="md" radius="md">
-      <Text fw={500} mb={5}>
-        {label}
-      </Text>
-      {getFilteredChartTooltipPayload(payload).map((item: any) => (
-        <Text key={item.name} c={item.color} fz="sm">
-          {item.name === "opponent" ? item.payload.opponentTeam : item.name}:{" "}
-          {item.value}
-          {item.payload.isHome ? "" : "*"}
-        </Text>
-      ))}
-    </Paper>
-  );
-}
 
 export const TableSelection = ({
   matches,
@@ -136,14 +116,12 @@ export const TableSelection = ({
   );
 
   return (
-    <ScrollArea scrollbars="x">
-      <Stack align="stretch" justify="center" gap="10px">
-        <Table w={650} verticalSpacing="1px" withTableBorder fz="12px">
-          <Table.Thead>{ths}</Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
-          <Table.Tfoot>{fhs}</Table.Tfoot>
-        </Table>
-        <Box bd="1px solid lightgrey">
+    <Table w={650} verticalSpacing="1px" withTableBorder fz="12px">
+      <Table.Thead>{ths}</Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
+      <Table.Tfoot>{fhs}</Table.Tfoot>
+
+      {/* <Box bd="1px solid lightgrey">
           <AreaChart
             bg={"blue.0"}
             h={200}
@@ -165,8 +143,7 @@ export const TableSelection = ({
             fillOpacity={0.33}
             connectNulls
           />
-        </Box>
-      </Stack>
-    </ScrollArea>
+        </Box> */}
+    </Table>
   );
 };
