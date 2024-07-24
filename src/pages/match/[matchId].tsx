@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { Center, Container, Select, Tabs } from "@mantine/core";
+import { Center, Container, Select, Space, Tabs, Title } from "@mantine/core";
 
 import { MatchInfo } from "@/components/match-info";
 import { STATS_TITLES, TABS_VALUES } from "@/config/constants";
@@ -17,6 +17,7 @@ const MatchPage = () => {
     awayMatches,
     matchInfo,
     onChangeCheckboxHome,
+    onChangeCheckboxAway,
     firstSelect,
     setFirstSelect,
     secondSelect,
@@ -25,7 +26,8 @@ const MatchPage = () => {
     filteredAwayMatches,
   } = useMatchData(matchId);
 
-  const [category, setCategory] = useState<string | null>("xg");
+  const [firstCategory, setFirstCategory] = useState<string | null>("xg");
+  const [secondCategory, setSecondCategory] = useState<string | null>("xg");
 
   //TODO: loading state
   if (!matchInfo || !homeMatches || !awayMatches) return <>404</>;
@@ -33,19 +35,21 @@ const MatchPage = () => {
   return (
     <Container size="xl" bd="1px dotted grey">
       <MatchInfo info={matchInfo} />
-      <Center fz="15px" mt="md" mb="md">
-        {matchInfo.home}:&nbsp; Last&nbsp;
+      <Center fz="15px" mt="xs" mb="xs">
+        <Title order={4}>{matchInfo.home}</Title>:&nbsp; last few&nbsp;
         <Select
           w="90px"
-          data={["home", "away", "all"]}
+          data={["home", "away", "h&a"]}
           value={firstSelect}
           onChange={setFirstSelect}
+          defaultValue="home"
+          allowDeselect={false}
         />
         &nbsp;matches:
       </Center>
       <Tabs
-        value={category}
-        onChange={setCategory}
+        value={firstCategory}
+        onChange={setFirstCategory}
         orientation="vertical"
         className={classes.tabs}
         classNames={classes}
@@ -60,17 +64,48 @@ const MatchPage = () => {
         <TableSelection
           matches={filteredHomeMatches}
           onChangeCheckbox={onChangeCheckboxHome}
-          category={category}
+          category={firstCategory}
           select={firstSelect}
         />
       </Tabs>
-      <hr />
-      {/* <TableSelection
-          matches={awayMatches}
+      <Space h={40} />
+      <Center fz="15px" mt="xs" mb="xs">
+        <Title order={4} bg="lightblue">
+          {matchInfo.away}
+        </Title>
+        :&nbsp; last few&nbsp;
+        <Select
+          w="90px"
+          data={["home", "away", "h&a"]}
+          value={secondSelect}
+          onChange={setSecondSelect}
+          defaultValue="away"
+          allowDeselect={false}
+        />
+        &nbsp;matches:
+      </Center>
+      <Tabs
+        value={secondCategory}
+        onChange={setSecondCategory}
+        orientation="vertical"
+        className={classes.tabs}
+        classNames={classes}
+      >
+        <Tabs.List>
+          {TABS_VALUES.map((value: string) => (
+            <Tabs.Tab key={value} value={value} fz={12}>
+              {STATS_TITLES[value]}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+        <TableSelection
+          matches={filteredAwayMatches}
           onChangeCheckbox={onChangeCheckboxAway}
-          category={category}
-        /> */}
-      {/* //TODO: graph */}
+          category={secondCategory}
+          select={secondSelect}
+        />
+      </Tabs>
+      <hr />
     </Container>
   );
 };

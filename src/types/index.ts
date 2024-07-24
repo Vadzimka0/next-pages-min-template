@@ -39,4 +39,4 @@ export type StatsType = {
   dangAtks: [number, number] | null;
 };
 
-export type TeamSelectHost = "home" | "away" | "all";
+export type TeamSelectHost = "home" | "away" | "h&a";

@@ -7,6 +7,7 @@ export const useMatchData = (matchId: string) => {
   const [homeMatches, setHomeMatches] = useState<MatchHistoryType[]>([]);
   const [awayMatches, setAwayMatches] = useState<MatchHistoryType[]>([]);
   const [matchInfo, setMatchInfo] = useState<MatchInfoType | null>(null);
+
   const [firstSelect, setFirstSelect] = useState<string | null>("home");
   const [secondSelect, setSecondSelect] = useState<string | null>("away");
 
@@ -65,7 +66,7 @@ export const useMatchData = (matchId: string) => {
         (match) => matchInfo?.home === match.away
       );
       break;
-    case "all":
+    case "h&a":
       filteredHomeMatches = homeMatches;
       break;
     default:
@@ -76,7 +77,7 @@ export const useMatchData = (matchId: string) => {
   switch (secondSelect) {
     case "home":
       filteredAwayMatches = awayMatches.filter(
-        (match) => matchInfo?.home === match.away
+        (match) => matchInfo?.away === match.home
       );
       break;
     case "away":
@@ -84,7 +85,7 @@ export const useMatchData = (matchId: string) => {
         (match) => matchInfo?.away === match.away
       );
       break;
-    case "all":
+    case "h&a":
       filteredAwayMatches = awayMatches;
       break;
     default:

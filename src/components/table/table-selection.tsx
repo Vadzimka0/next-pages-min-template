@@ -8,6 +8,7 @@ import {
   Paper,
   Stack,
   Group,
+  Box,
 } from "@mantine/core";
 import {
   AreaChart,
@@ -111,7 +112,7 @@ export const TableSelection = ({
   const fhs = (
     <Table.Tr>
       <Table.Th style={{ width: rem(40) }}></Table.Th>
-      {select === "all" ? (
+      {select === "h&a" ? (
         <>
           <Table.Th></Table.Th>
           <Table.Th></Table.Th>
@@ -135,34 +136,36 @@ export const TableSelection = ({
   );
 
   return (
-    <ScrollArea>
-      <Stack align="stretch" justify="center" gap="30px">
-        <Table w={650} verticalSpacing="2px" withTableBorder fz="12px">
+    <ScrollArea scrollbars="x">
+      <Stack align="stretch" justify="center" gap="10px">
+        <Table w={650} verticalSpacing="1px" withTableBorder fz="12px">
           <Table.Thead>{ths}</Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>
           <Table.Tfoot>{fhs}</Table.Tfoot>
         </Table>
-        <AreaChart
-          bg={"blue.0"}
-          h={200}
-          data={data}
-          dataKey="date"
-          tooltipProps={{
-            content: ({ label, payload }) => (
-              <ChartTooltip label={label} payload={payload} />
-            ),
-          }}
-          series={[
-            { name: "Bayern Munich", color: "indigo.8" },
-            { name: "opponent", color: "orange.4" },
-          ]}
-          curveType="bump"
-          // yAxisProps={{ domain: [0, 120] }}
-          referenceLines={[{ y: 3, label: "Avg 3", color: "indigo.2" }]}
-          xAxisProps={{ angle: -23 }}
-          fillOpacity={0.33}
-          connectNulls
-        />
+        <Box bd="1px solid lightgrey">
+          <AreaChart
+            bg={"blue.0"}
+            h={200}
+            data={data}
+            dataKey="date"
+            tooltipProps={{
+              content: ({ label, payload }) => (
+                <ChartTooltip label={label} payload={payload} />
+              ),
+            }}
+            series={[
+              { name: "Bayern Munich", color: "indigo.8" },
+              { name: "opponent", color: "orange.4" },
+            ]}
+            curveType="bump"
+            // yAxisProps={{ domain: [0, 120] }}
+            referenceLines={[{ y: 3, label: "Avg 3", color: "indigo.2" }]}
+            xAxisProps={{ angle: -23 }}
+            fillOpacity={0.33}
+            connectNulls
+          />
+        </Box>
       </Stack>
     </ScrollArea>
   );
