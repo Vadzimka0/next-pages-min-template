@@ -1,20 +1,5 @@
 import { ChangeEvent } from "react";
-import {
-  Table,
-  Text,
-  Checkbox,
-  ScrollArea,
-  rem,
-  Paper,
-  Stack,
-  Group,
-  Box,
-} from "@mantine/core";
-import {
-  AreaChart,
-  ChartTooltipProps,
-  getFilteredChartTooltipPayload,
-} from "@mantine/charts";
+import { Table, Text, Checkbox, rem } from "@mantine/core";
 import cx from "clsx";
 
 import { MatchHistoryType, StatsType } from "@/types";

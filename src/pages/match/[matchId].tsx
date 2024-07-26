@@ -104,6 +104,12 @@ const MatchPage = () => {
     firstCategory!
   ).reverse();
 
+  const graphAwayMatches = buildRequiredStats(
+    filteredAwayMatches.filter((match: MatchHistoryType) => match.ch),
+    matchInfo?.away,
+    secondCategory!
+  ).reverse();
+
   //TODO: loading state
   if (!matchInfo || !homeMatches || !awayMatches) return <>404</>;
 
@@ -212,7 +218,7 @@ const MatchPage = () => {
               <AreaChart
                 bg={"blue.0"}
                 h={200}
-                data={data}
+                data={graphAwayMatches}
                 dataKey="date"
                 tooltipProps={{
                   content: ({ label, payload }) => (
@@ -220,8 +226,8 @@ const MatchPage = () => {
                   ),
                 }}
                 series={[
-                  { name: "Bayern Munich", color: "indigo.8" },
-                  { name: "opponent", color: "orange.4" },
+                  { name: `${matchInfo.away}`, color: "orange.4" }, //color: "indigo.8"
+                  { name: "opponent", color: "indigo.8" },
                 ]}
                 curveType="bump"
                 // yAxisProps={{ domain: [0, 120] }}
