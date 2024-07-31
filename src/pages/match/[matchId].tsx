@@ -24,7 +24,6 @@ import { STATS_TITLES, TABS_VALUES } from "@/config/constants";
 import { TableSelection } from "@/components/table";
 import { useMatchData } from "@/hooks/useMatchData";
 import classes from "@/styles/index.module.css";
-import { data } from "./data";
 import { MatchHistoryType, StatsType } from "@/types";
 
 function ChartTooltip({ label, payload }: ChartTooltipProps) {

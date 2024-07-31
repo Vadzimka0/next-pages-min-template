@@ -20,7 +20,7 @@ apiClient.interceptors.response.use(
       return null;
     }
 
-    const message = error.response?.data?.message || error.message;
+    // const message = error.response?.data?.message || error.message;
 
     // notificationsStore.getState().showNotification({
     //   type: "error",
